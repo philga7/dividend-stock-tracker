@@ -27,6 +27,8 @@ jobs:
         run: pnpm exec playwright install --with-deps
 
       - name: Run E2E Tests
+        env:
+            ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
         run: pnpm test:e2e
 
       - name: Build Project
