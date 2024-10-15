@@ -34,11 +34,11 @@ test.describe('Stock Quote Form', () => {
     await expect(stochK).toContainText('Stochastic K:');
     await expect(stochD).toContainText('Stochastic D:');
 
-    // Assert that the price, open, and change details are rendered
-    const openPrice = page.locator('text=Open: $');
-    const change = page.locator('text=Change:');
+    // Assert that the high and low details are rendered
+    const openPrice = page.locator('text=High: $');
+    const change = page.locator('text=Low:');
     
-    await expect(openPrice).toContainText('Open: $');
-    await expect(change).toContainText('Change:');
+    await expect(openPrice).toContainText('High: $');
+    await expect(change).toContainText('Low:');
   });
 });
