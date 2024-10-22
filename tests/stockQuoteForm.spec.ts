@@ -17,7 +17,7 @@ test.describe('Stock Quote Form', () => {
     await button.click();
 
     // Wait for the stock data to appear
-    const stockSymbol = page.locator('text=AAPL');
+    const stockSymbol = page.locator('h3:has-text("AAPL")');
     await expect(stockSymbol).toBeVisible();
     
     // Check that stock data fields are rendered

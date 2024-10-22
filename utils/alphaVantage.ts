@@ -1,4 +1,5 @@
 import axios from 'axios';
+import NewsArticle from '@/types/newsArticle';
 
 const API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
 const BASE_URL = 'https://www.alphavantage.co/query';
@@ -63,7 +64,8 @@ export const getStockQuote = async (symbol: string) => {
                 apikey: API_KEY,
             },
         });
-        const newsArticles = newsResponse.data.feed.slice(0, 6).map((article: any) => ({
+
+        const newsArticles = newsResponse.data.feed.slice(0, 6).map((article: NewsArticle) => ({
             title: article.title,
             url: article.url,
         }));
