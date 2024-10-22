@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { getStockQuote } from '../../utils/alphaVantage';
+import { getStockQuote as getAlphaVantageQuote } from '../../utils/alphaVantage';
+import { getStockQuote as getPolygonQuote } from '../../utils/polygon';
 import StockQuote from '@/types/stockQuote';
 
 const StockQuoteForm = () => {
@@ -8,6 +9,7 @@ const StockQuoteForm = () => {
     const [error, setError] = useState('');
     const [signal, setSignal] = useState('');
     const [momentumContext, setMomentumContext] = useState('');
+    const [selectedApi, setSelectedApi] = useState<'alphaVantage' | 'polygon'>('alphaVantage');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -16,7 +18,14 @@ const StockQuoteForm = () => {
         setMomentumContext('');  // Reset momentum context on new fetch
 
         try {
-            const data = await getStockQuote(symbol);
+            let data: StockQuote;
+
+            if (selectedApi === 'alphaVantage') {
+                data = await getAlphaVantageQuote(symbol);
+            } else {
+                data = await getPolygonQuote(symbol);
+            }
+
             setQuote(data);
 
             // Analyze SMA and Stochastic for buy/sell signals
@@ -64,6 +73,17 @@ const StockQuoteForm = () => {
                     onChange={(e) => setSymbol(e.target.value)}
                     className="input input-bordered w-full"
                 />
+
+                {/* API selection dropdown */}
+                <select 
+                    value={selectedApi}
+                    onChange={(e) => setSelectedApi(e.target.value as 'alphaVantage' | 'polygon')}
+                    className="select select-bordered"
+                >
+                    <option value="alphaVantage">AlphaVantage</option>
+                    <option value="polygon">Polygon.io</option>
+                </select>
+
                 <button type="submit" className="btn btn-primary">Get Quote</button>
             </form>
 
