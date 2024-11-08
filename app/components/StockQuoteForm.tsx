@@ -84,7 +84,7 @@ const StockQuoteForm = () => {
                     <option value="polygon">Polygon.io</option>
                 </select>
 
-                <button type="submit" className="btn btn-primary">Get Quote</button>
+                <button type="submit" className="btn btn-primary w-full">Get Quote</button>
             </form>
 
             {error && <p className="text-red-500 mt-4">{error}</p>}
